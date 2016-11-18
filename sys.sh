@@ -7,7 +7,7 @@ cpu=`top -bi -n 2 -d 0.1 | grep Cpu | tail -1 `
 us=`echo $cpu | awk -F'[ %]' '{print $2}'`
 sy=`echo $cpu | awk -F'[ %]' '{print $4}'`
 id=`echo $cpu | awk -F'[ %]' '{print $8}'`
-if [ "$a" == "id," ];then
+if [ "$id" == "id," ];then
 id=100.0
 fi
 
