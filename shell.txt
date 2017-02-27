@@ -1,0 +1,65 @@
+变量：
+string='string'
+$string or ${string}  # 加花括号为了识别变量的边界
+readonly string       # 设置只读变量
+unset string          # 销毁变量
+${#string}            # 获取该字符串的长度
+${string:1:4}         # 截取字符串trin
+echo `expr index "string" is`      # 查找子串is的i和s两个字符在string字符串第一次出现的位置
+
+${file%.*}          #shell获取文件前缀
+${file##*.}         #shell获取文件后缀
+
+字符串删除：
+a="/usr/sbin/ntpdate"
+# 最左开始删除最短匹配字符串 ${变量#样式}
+b=${a#/*/}    ==> sbin/ntpdate
+# 最左开始删除最长匹配字符串 ${变量##样式}
+b=${a##/*/}    ==> ntpdate
+# 最右开始删除最短匹配字符串 ${变量%样式}
+b=${a%/*}     ==> /usr/sbin
+# 最右开始删除最长匹配字符串 ${变量%%样式}
+b=${a%%/*}    ==> 空
+
+字符串替换：
+# 只替换第一次匹配
+${变量/样式/替换字符串}
+a="root:x:0:0:root:/root:/bin/bash"
+b=${a/:/,}    ==> root,x:0:0:root:/root:/bin/bash
+# 替换所有匹配
+${变量//样式/替换字符串}
+b=${a//:/,}   ==> root,x,0,0,root,/root,/bin/bash 
+
+
+数组：
+array_name=(
+value0
+value1
+value2
+value3
+)
+${#array_name[@]}     # 获取数组的所有元素
+${#array_name[*]}     # 获取数组的所有元素
+${array_name[n]}      # 获取数组的某一个元素
+${#array_name[n]}     # 获取数组的某一个元素的长度
+
+shell参数：
+$*和$@区别(表示所有参数)：
+$*:把所有参数作为一个参数
+$@:所有参数分别传入
+如在脚本运行时写了三个参数 1、2、3，，则 " * " 等价于 "1 2 3"（传递了一个参数），而 "@" 等价于 "1" "2" "3"（传递了三个参数）
+
+shell运算符：
+-z       # 检测字符串长度是否为0，为0返回true
+-s       # 检测文件是否为空，不为空则返回true
+
+函数：
+返回值:函数默认返回值为0，当有返回值时，调用该函数后，可以使用$?来获取函数的返回值。
+参数获取:$10不能获取第十个参数，获取第十个参数需要${10}。当n>=10时，需要使用${n}来获取参数。
+
+
+
+exit      退出当前脚本
+sleep n         等待n秒
+ps -ef|grep '^.*java.*'"$line"'.*$'|grep -v grep|awk '{print $2}'|xargs kill -9  杀掉tomcat进程，xargs是为了获取上一个命令的执行结果
+du -sh *    查看当前目录下的文件或目录大小
